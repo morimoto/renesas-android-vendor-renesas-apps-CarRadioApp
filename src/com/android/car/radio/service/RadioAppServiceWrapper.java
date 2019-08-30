@@ -23,6 +23,7 @@ import android.content.ServiceConnection;
 import android.hardware.radio.ProgramSelector;
 import android.hardware.radio.RadioManager.ProgramInfo;
 import android.media.session.PlaybackState;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.RemoteException;
 
@@ -252,12 +253,15 @@ public class RadioAppServiceWrapper {
         if (service == null) {
             throw new IllegalStateException("Service is not connected");
         }
-        try {
-            op.execute(service);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Remote call failed", e);
-            onServiceFailure();
-        }
+
+        AsyncTask.SERIAL_EXECUTOR.execute(() -> {
+            try {
+                op.execute(service);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Remote call failed", e);
+                onServiceFailure();
+            }
+        });
     }
 
     /**
