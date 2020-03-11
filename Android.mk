@@ -28,6 +28,8 @@ LOCAL_AIDL_INCLUDES := \
 
 LOCAL_PACKAGE_NAME := RCarRadioApp
 
+LOCAL_OVERRIDES_PACKAGES += CarRadioApp
+
 LOCAL_PRIVATE_PLATFORM_APIS := true
 
 LOCAL_REQUIRED_MODULES := privapp_whitelist_com.android.car.radio
@@ -36,22 +38,16 @@ LOCAL_CERTIFICATE := platform
 
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_PRIVILEGED_MODULE := true
-
-LOCAL_OVERRIDES_PACKAGES += CarRadioApp
-
 LOCAL_PRODUCT_MODULE := true
+
+LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_USE_AAPT2 := true
 
 LOCAL_JAVA_LIBRARIES += android.car
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    androidx.lifecycle_lifecycle-livedata \
-    androidx.sqlite_sqlite-framework \
-    androidx.sqlite_sqlite \
-    car-androidx-room-common-nodeps \
-    car-androidx-room-runtime-nodeps
+    androidx.lifecycle_lifecycle-livedata
 
 LOCAL_ANNOTATION_PROCESSORS := \
     car-androidx-annotation-nodeps \
@@ -78,9 +74,11 @@ LOCAL_DEX_PREOPT := false
 
 LOCAL_STATIC_ANDROID_LIBRARIES += \
     androidx-constraintlayout_constraintlayout \
+    androidx.room_room-runtime \
     car-apps-common \
     car-media-common \
-    car-broadcastradio-support
+    car-broadcastradio-support \
+    car-ui-lib
 
 # Including the resources for the static android libraries allows to pick up their static overlays.
 LOCAL_RESOURCE_DIR += \
